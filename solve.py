@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import geopy.distance as geodist
-import sys
-import pickle
 import numpy as np
-import os
+import sys, pickle, os, random
+
 
 C = 10 * 1000 * 1000 # 10 tons
 
@@ -40,23 +39,19 @@ def swap(l,i,j):
     l[i], l[j] = l[j], l[i]
 
 def opt2(l):
-    l = [1] + l + [1]
     d = path_distance(l)
     opt = False
     while not opt:
         opt = True
         for i in range(len(l)):
             for j in range(i+1, len(l)):
-
-
                 swap(l, i, j)
                 ds = path_distance(l)
                 if ds < d:
-                    #opt = False
+                    opt = False
                     d = ds
                 else:
                     swap(l, i, j)
-    l = [1:-1]
 
 i = 2 
 total = 0
@@ -83,19 +78,16 @@ while len(free):
 
         for n in free:
             if s + weights[n] < C:
-                l.append(n)
-                
-                opt2(l)
-                d = path_distance(l)
+                if not len(l):
+                    d = random.randint(0,100)
+                else:
+                    d = distances[l[-1]][n]
                 
                 if d < closest_d:
                     closest_d = d
                     closest_i = n
 
-                l.remove(n)
-
         #print(closest_d, closest_i)
-
         if closest_i == -1: break
 
         s += weights[closest_i]
