@@ -110,7 +110,7 @@ while len(free):
     print(l)
     print(len(free))
 
-with open(str(int(total)), 'w') as f:
+with open(str(int(total))+".res", 'w') as f:
     for path in paths:
         pathstr = ";".join(map(str, path))+"\n"
         f.write(pathstr)
