@@ -1,3 +1,4 @@
 .vscode
 *.res
 *.npy
+__pycache__
