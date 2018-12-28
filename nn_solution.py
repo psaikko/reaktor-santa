@@ -2,7 +2,7 @@
 import geopy.distance as geodist
 import numpy as np
 import sys, pickle, os, random
-
+from kopt import opt2
 
 C = 10 * 1000 * 1000 # 10 tons
 
@@ -37,21 +37,6 @@ def path_distance(l):
 
 def swap(l,i,j):
     l[i], l[j] = l[j], l[i]
-
-def opt2(l):
-    d = path_distance(l)
-    opt = False
-    while not opt:
-        opt = True
-        for i in range(len(l)):
-            for j in range(i+1, len(l)):
-                swap(l, i, j)
-                ds = path_distance(l)
-                if ds < d:
-                    opt = False
-                    d = ds
-                else:
-                    swap(l, i, j)
 
 i = 2 
 total = 0
@@ -96,7 +81,7 @@ while len(free):
 
     if not len(l): break
     
-    opt2(l)
+    opt2(l, path_distance)
     total += path_distance(l)
     paths.append(l)
     print(l)
