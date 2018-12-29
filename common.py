@@ -36,11 +36,12 @@ else:
 
 def path_distance(l):
     global distances
+    if len(l) == 0: return 0
     d = distances[1][l[0]]
 
     for i in range(1,len(l)):
         d += distances[l[i-1]][l[i]]
-
+    
     d += distances[l[-1]][1]
     return d
 

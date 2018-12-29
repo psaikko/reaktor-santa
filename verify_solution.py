@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+from common import *
 
 if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]):
     print("need solution file as input")
@@ -8,18 +9,23 @@ if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]):
 
 visited = set()
 
-trips = 0
+paths = read(sys.argv[1])
 
-for line in open(sys.argv[1], 'r'):
-    children = line.strip().split(";")
-    for child in children:
+print(len(paths),"paths")
+
+for path in paths:
+    for child in path:
         if not int(child) in visited:
             visited.add(int(child))
         else:
             print("Visits %s again" % child)
-    trips += 1
 
-print("%d trips" % trips)
+loads = [sum(weights[c] for c in path) for path in paths]
+
+for load in loads:
+    if load > C:
+        print("overload", load)
+        break
 
 for i in range(2,10001+1):
     if i not in visited:
