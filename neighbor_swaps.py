@@ -86,20 +86,12 @@ def try_pairs(i, j):
                 return True
     return False
 
-converged = False
-t = 0
-neighborhood_size = 1
-while not converged:
-    t += 1
-    converged = True
+neighborhood_size = 20
+while True:
     for i in range(len(paths)):
-        for j in path_neighborhood[i][:neighborhood_size]:
-            if try_pairs(i,j):
-                converged = False
-
+        j = path_neighborhood[i][random.randint(0,neighborhood_size)]
+        try_pairs(i,j)
 
     path_neighborhood = [find_neighborhood(i) for i in range(len(paths))]
 
-    print("%d rounds" % t, int(sum(path_distance(p) for p in paths)))
-
-save(paths)
+    save(paths)
